@@ -1,0 +1,66 @@
+#include "Input.h"
+
+Input::Input(
+	const Graphics* pGraphics,
+	const D2D1_POINT_2F& centerPoint,
+	const float radius,
+	const D2D1_COLOR_F& bgColor,
+	const D2D1_COLOR_F& activeColor
+) :
+	MoveableCircuitItem(pGraphics, D2D1::RectF(), bgColor, L"", D2D1::ColorF(D2D1::ColorF::Black)),
+	centerPoint{ centerPoint },
+	radius{ radius },
+	activeColor{ activeColor },
+	signalOutput{ pGraphics, D2D1::Point2F(0.0f, 0.0f), 0.0f, D2D1::ColorF(D2D1::ColorF::Gray), centerPoint }
+{
+}
+
+void Input::Draw() const
+{
+	if(actived)
+		pGraphics->FillCircle(centerPoint, radius, activeColor);
+	else
+		pGraphics->FillCircle(centerPoint, radius, bgColor);
+
+	signalOutput.Draw(D2D1::RectF(
+		centerPoint.x, centerPoint.y,
+		centerPoint.x, centerPoint.y
+	));
+}
+
+MoveableCircuitItem* Input::OnClick(const D2D1_POINT_2F& mousePoint)
+{
+	if (DistanceOfTwoPoint(mousePoint, centerPoint) <= radius)
+	{
+		if (GetKeyState(VK_LCONTROL) & 0x8000 && GetKeyState(VK_LBUTTON) & 0x8000)
+		{
+			mouseOffset.x = mousePoint.x - centerPoint.x;
+			mouseOffset.y = mousePoint.y - centerPoint.y;
+			return this;
+		}
+		else if (GetKeyState(VK_RBUTTON) & 0x8000)
+		{
+			
+		}
+		else if(GetKeyState(VK_LBUTTON) & 0x8000)
+			actived = !actived;
+	}
+
+	return nullptr;
+}
+
+SignalOutput* Input::OnRightClick(const D2D1_POINT_2F& mousePoint)
+{
+	if (DistanceOfTwoPoint(mousePoint, centerPoint) <= radius)
+	{
+		signalOutput.UpdateLine(mousePoint);
+		return &signalOutput;
+	}
+	return nullptr;
+}
+
+void Input::Move(const D2D1_POINT_2F& mousePoint)
+{
+	centerPoint.x = mousePoint.x - mouseOffset.x;
+	centerPoint.y = mousePoint.y - mouseOffset.y;
+}

@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "SignalInput.h"
 #include "SignalOutput.h"
+#include "SignalLine.h"
 #include <Windows.h>
 #include <vector>
 #include <Windowsx.h>
@@ -26,7 +27,7 @@ private:
 	Graphics* pGraphics{ new Graphics() };
 	std::vector<LayoutItem*> layoutVector{};
 	std::vector<CircuitItem*> circuitVector{};
-	std::vector<LayoutItem*> signalLinesVector{};
+	std::vector<CircuitItem*> signalLinesVector{};
 	float nWidth{};
 	float nHeight{};
 	bool lmbPrevious{ false };

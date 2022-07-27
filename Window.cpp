@@ -267,7 +267,7 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			if (!pSelectedSignalInput)
 			{
-				Line* resetedLine{ pSelectedSignalOutput->GetLinePtr() };
+				SignalLine* resetedLine{ pSelectedSignalOutput->GetLinePtr() };
 
 				for (size_t index{ 0 }; index < signalLinesVector.size(); index++)
 					if (signalLinesVector.at(index) == resetedLine)

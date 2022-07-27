@@ -2,13 +2,13 @@
 
 #include "SignalIO.h"
 #include "SignalInput.h"
-#include "Line.h"
+#include "SignalLine.h"
 
 class SignalOutput : public SignalIO
 {
 private:
 	SignalInput* pLinkedInput{};
-	Line signalLine;
+	SignalLine signalLine;
 
 public:
 	SignalOutput(
@@ -24,6 +24,6 @@ public:
 	void UpdateLine();
 	void Draw() const override;
 	void Move(const D2D1_POINT_2F& ptMoveTo) override;
-	Line* GetLinePtr() { return &signalLine; }
+	SignalLine* GetLinePtr() { return &signalLine; }
 };
 

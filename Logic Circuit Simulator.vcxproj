@@ -122,6 +122,7 @@
     <ClInclude Include="ORGate.h" />
     <ClInclude Include="SignalInput.h" />
     <ClInclude Include="SignalIO.h" />
+    <ClInclude Include="SignalLine.h" />
     <ClInclude Include="SignalOutput.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowClass.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="ORGate.cpp" />
     <ClCompile Include="SignalInput.cpp" />
     <ClCompile Include="SignalIO.cpp" />
+    <ClCompile Include="SignalLine.cpp" />
     <ClCompile Include="SignalOutput.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowClass.cpp" />

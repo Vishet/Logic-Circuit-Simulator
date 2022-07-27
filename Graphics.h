@@ -44,7 +44,7 @@ public:
 		const D2D1::ColorF& clearColor, 
 		const std::vector<LayoutItem*>& layoutItems, 
 		const std::vector<CircuitItem*>& circuitItems,
-		const std::vector<LayoutItem*>& signalLines
+		const std::vector<CircuitItem*>& signalLines
 	) const;
 	bool EndDraw() const;
 
@@ -56,7 +56,6 @@ public:
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const;
 	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;
 
-	void DrawCircuit(const std::vector<CircuitItem*>& circuitItems) const;
-	void DrawSignalLines(const std::vector<LayoutItem*>& signalLines) const;
+	void DrawCircuit(const std::vector<CircuitItem*>& circuitItems, const std::vector<CircuitItem*>& signalLines) const;
 };
 

@@ -20,7 +20,6 @@ public:
 	virtual CircuitItem* OnClick(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual SignalOutput* OnRightClick(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual SignalInput* OnRightUp(const D2D1_POINT_2F& mousePoint) = 0;
-	virtual void Move(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual void Draw() const = 0;
 };
 

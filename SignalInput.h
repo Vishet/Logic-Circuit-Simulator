@@ -1,12 +1,12 @@
 #pragma once
 
 #include "SignalIO.h"
-#include "Line.h"
+#include "SignalLine.h"
 
 class SignalInput : public SignalIO
 {
 private:
-	Line* signalLine{};
+	SignalLine* signalLine{};
 
 public:
 	SignalInput(
@@ -18,7 +18,7 @@ public:
 
 	void Move(const D2D1_POINT_2F& ptMoveTo) override;
 	void Draw() const override;
-	void LinkLine(Line* signalLine) { this->signalLine = signalLine; }
+	void LinkLine(SignalLine* signalLine) { this->signalLine = signalLine; }
 	bool isLinked() { return signalLine; }
 };
 

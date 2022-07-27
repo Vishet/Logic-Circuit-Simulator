@@ -2,6 +2,7 @@
 
 #include <array>
 #include <vector>
+#include <algorithm>
 
 class Keyboard
 {
@@ -17,6 +18,7 @@ private:
 	static constexpr size_t VKCodesNumber{ 256 };
 	std::array<KeyStatus, VKCodesNumber> keysStatus{};
 	std::vector<size_t> pressedReleasedKeys{};
+	std::vector<size_t> downKeys{};
 
 public:
 	Keyboard() = default;

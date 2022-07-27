@@ -7,8 +7,6 @@ void Keyboard::OnKeyDown(int vkCode)
 		keysStatus.at(vkCode) = KeyStatus::PRESSED;
 		pressedReleasedKeys.push_back(vkCode);
 	}
-	else
-		keysStatus.at(vkCode) = KeyStatus::DOWN;
 }
 
 void Keyboard::OnKeyUp(int vkCode)
@@ -17,9 +15,11 @@ void Keyboard::OnKeyUp(int vkCode)
 	{
 		keysStatus.at(vkCode) = KeyStatus::RELEASED;
 		pressedReleasedKeys.push_back(vkCode);
+		
+		const auto downKey{ std::find(downKeys.begin(), downKeys.end(), vkCode) };
+		if (downKey != downKeys.end())
+			downKeys.erase(downKey);
 	}
-	else
-		keysStatus.at(vkCode) = KeyStatus::UP;
 }
 
 void Keyboard::UpdateKeys()
@@ -29,7 +29,10 @@ void Keyboard::UpdateKeys()
 		if (keysStatus.at(keyCode) == KeyStatus::RELEASED)
 			keysStatus.at(keyCode) = KeyStatus::UP;
 		else if (keysStatus.at(keyCode) == KeyStatus::PRESSED)
+		{
 			keysStatus.at(keyCode) = KeyStatus::DOWN;
+			downKeys.push_back(keyCode);
+		}
 	}
 
 	pressedReleasedKeys.clear();
@@ -38,5 +41,12 @@ void Keyboard::UpdateKeys()
 void Keyboard::FlushKeys()
 {
 	keysStatus.fill(KeyStatus::UP);
+
+	for (auto keyCode : downKeys)
+	{
+		keysStatus.at(keyCode) = KeyStatus::RELEASED;
+	}
+
+	downKeys.clear();
 	pressedReleasedKeys.clear();
 }

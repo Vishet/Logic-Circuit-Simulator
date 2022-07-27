@@ -319,6 +319,7 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		return 0;
 
+	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN:
 	{
 		if (!(HIWORD(lParam) & 0x4000))
@@ -335,6 +336,10 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			keyboard->OnKeyUp(static_cast<int>(wParam));
 			OutputDebugString(L"SOLTOU\n");
 		}
+		return 0;
+
+	case WM_KILLFOCUS:
+		keyboard->FlushKeys();
 		return 0;
 
 	default:

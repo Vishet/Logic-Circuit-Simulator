@@ -1,26 +1,14 @@
 #include "Window.h"
 #include "Graphics.h"
 #include <Windows.h>
+#include "App.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-	Graphics::InitializeCOM();
+	App* emulator = new App();
 
-	Window* mainWindow{ new Window() };
-	mainWindow->Create(L"Logic Circuit Simulator", WindowClass::ClassName::VCLASS, 800, 600);
-	mainWindow->Show();
+	int exitCode{ emulator->Run() };
 
-	MSG msg{};
-	while (msg.message != WM_QUIT)
-	{
-		PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
-	delete mainWindow;
-	WindowClass::UnregisterAllClasses();
-	Graphics::UnitializeCOM();
-
-	return static_cast<int>(msg.wParam);
+	delete emulator;
+	return exitCode;
 }

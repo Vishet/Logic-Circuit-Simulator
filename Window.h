@@ -43,6 +43,8 @@ private:
 
 public:
 	Window();
+	Window(const Window&) = delete;
+	Window operator=(const Window&) = delete;
 	~Window();
 
 	bool Create(const wchar_t* szWindowName, WindowClass::ClassName className, int nWidth, int nHeight, int x = 0, int y = 0);

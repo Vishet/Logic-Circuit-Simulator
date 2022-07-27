@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Window.h"
+#include "Keyboard.h"
 //#include "Graphics.h"
 
 class App
 {
 private:
-	Window window{};
+	Keyboard keyboard{};
+	Window window{&keyboard};
 
 public:
 	App() = default;

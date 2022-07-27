@@ -116,6 +116,7 @@
     <ClInclude Include="HoldableItem.h" />
     <ClInclude Include="HoldableOR.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LayoutItem.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MoveableCircuitItem.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="HoldableItem.cpp" />
     <ClCompile Include="HoldableOR.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Logic Circuit Simulator.cpp" />
     <ClCompile Include="MoveableCircuitItem.cpp" />

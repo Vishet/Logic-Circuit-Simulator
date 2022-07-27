@@ -1,6 +1,7 @@
 #include "Window.h"
 
-Window::Window()
+Window::Window(Keyboard* keyboard) :
+	keyboard{ keyboard }
 {
 }
 
@@ -315,6 +316,24 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (!this->Update())
 					MessageBox(hWindow, L"this->Update() failed!", L"ERROR", MB_ICONERROR | MB_OK);
 			}
+		}
+		return 0;
+
+	case WM_KEYDOWN:
+	{
+		if (!(HIWORD(lParam) & 0x4000))
+		{
+			keyboard->OnKeyDown(static_cast<int>(wParam));
+			OutputDebugString(L"APERTOU\n");
+		}
+		return 0;
+	}
+
+	case WM_KEYUP:
+		if (HIWORD(lParam) & 0x4000)
+		{
+			keyboard->OnKeyUp(static_cast<int>(wParam));
+			OutputDebugString(L"SOLTOU\n");
 		}
 		return 0;
 

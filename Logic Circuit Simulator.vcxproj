@@ -119,6 +119,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LayoutItem.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="MoveableCircuitItem.h" />
     <ClInclude Include="NormalGate.h" />
     <ClInclude Include="ORGate.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Logic Circuit Simulator.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MoveableCircuitItem.cpp" />
     <ClCompile Include="NormalGate.cpp" />
     <ClCompile Include="ORGate.cpp" />

@@ -17,6 +17,7 @@
 #include <vector>
 #include <Windowsx.h>
 #include "Keyboard.h"
+#include "Mouse.h"
 
 #define MOUSEMOVE_LMB 0x0001
 #define MOUSEMOVE_RMB 0x0002
@@ -43,11 +44,10 @@ private:
 	bool Update() const;
 
 	Keyboard* keyboard;
-
-	bool debuga{ false };
+	Mouse* mouse;
 
 public:
-	Window(Keyboard* keyboard);
+	Window(Keyboard* keyboard, Mouse* mouse);
 	Window(const Window&) = delete;
 	Window operator=(const Window&) = delete;
 	~Window();

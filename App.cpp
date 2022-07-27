@@ -20,3 +20,9 @@ int App::Run()
 
 	return static_cast<int>(msg.wParam);
 }
+
+void App::Update()
+{
+	mouse.Update();
+	keyboard.Update();
+}

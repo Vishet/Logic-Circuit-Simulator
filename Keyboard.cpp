@@ -22,7 +22,7 @@ void Keyboard::OnKeyUp(int vkCode)
 	}
 }
 
-void Keyboard::UpdateKeys()
+void Keyboard::Update()
 {
 	for (const auto& keyCode : pressedReleasedKeys)
 	{
@@ -38,7 +38,7 @@ void Keyboard::UpdateKeys()
 	pressedReleasedKeys.clear();
 }
 
-void Keyboard::FlushKeys()
+void Keyboard::Flush()
 {
 	keysStatus.fill(KeyStatus::UP);
 
@@ -49,4 +49,9 @@ void Keyboard::FlushKeys()
 
 	downKeys.clear();
 	pressedReleasedKeys.clear();
+}
+
+Keyboard::KeyStatus Keyboard::GetKeyStatus(int vkCode) const
+{
+	return keysStatus.at(vkCode);
 }

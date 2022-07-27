@@ -1,7 +1,8 @@
 #include "Window.h"
 
-Window::Window(Keyboard* keyboard) :
-	keyboard{ keyboard }
+Window::Window(Keyboard* keyboard, Mouse* mouse) :
+	keyboard{ keyboard },
+	mouse{ mouse }
 {
 }
 
@@ -157,6 +158,9 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 
 	case WM_LBUTTONDOWN:
+		{
+		mouse->OnLeftDown();
+		}
 		if (!lmbPrevious)
 		{
 			for (auto& item : layoutVector)
@@ -194,6 +198,9 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_LBUTTONUP:
+	{
+		mouse->OnLeftUp();
+	}
 		for (size_t i{0}; i < layoutVector.size(); i++)
 		{
 			if (layoutVector.at(i) == pHoldingItem)
@@ -215,6 +222,9 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_RBUTTONDOWN:
+	{
+		mouse->OnRightDown();
+	}
 		if (!rmbPrevious)
 		{
 			for (auto& item : circuitVector)
@@ -246,6 +256,9 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_RBUTTONUP:
+	{
+		mouse->OnRightUp();
+	}
 		if (pSelectedSignalOutput)
 		{
 			for (auto& item : circuitVector)
@@ -288,6 +301,9 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_MOUSEMOVE:
+	{
+		mouse->OnMove(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+	}
 		if ((wParam & MOUSEMOVE_LMB) == MOUSEMOVE_LMB)
 		{
 			if (pHoldingItem)
@@ -317,6 +333,10 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					MessageBox(hWindow, L"this->Update() failed!", L"ERROR", MB_ICONERROR | MB_OK);
 			}
 		}
+		{
+			POINT pt{ mouse->GetMousePosition() };
+			OutputDebugString( (std::to_wstring(pt.x) + L' ' + std::to_wstring(pt.y) + L'\n').c_str());
+		}
 		return 0;
 
 	case WM_SYSKEYDOWN:
@@ -325,7 +345,6 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (!(HIWORD(lParam) & 0x4000))
 		{
 			keyboard->OnKeyDown(static_cast<int>(wParam));
-			OutputDebugString(L"APERTOU\n");
 		}
 		return 0;
 	}
@@ -334,12 +353,11 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (HIWORD(lParam) & 0x4000)
 		{
 			keyboard->OnKeyUp(static_cast<int>(wParam));
-			OutputDebugString(L"SOLTOU\n");
 		}
 		return 0;
 
 	case WM_KILLFOCUS:
-		keyboard->FlushKeys();
+		keyboard->Flush();
 		return 0;
 
 	default:

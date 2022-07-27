@@ -2,13 +2,15 @@
 
 #include "Window.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 //#include "Graphics.h"
 
 class App
 {
 private:
 	Keyboard keyboard{};
-	Window window{&keyboard};
+	Mouse mouse{};
+	Window window{&keyboard, &mouse};
 
 public:
 	App() = default;
@@ -17,7 +19,7 @@ public:
 	
 	int Run();
 
-	//void Update();
+	void Update();
 	//void Render();
 };
 

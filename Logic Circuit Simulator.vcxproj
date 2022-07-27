@@ -115,6 +115,7 @@
     <ClInclude Include="HoldableInput.h" />
     <ClInclude Include="HoldableItem.h" />
     <ClInclude Include="HoldableOR.h" />
+    <ClInclude Include="HPTimer.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LayoutItem.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="HoldableInput.cpp" />
     <ClCompile Include="HoldableItem.cpp" />
     <ClCompile Include="HoldableOR.cpp" />
+    <ClCompile Include="HPTimer.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Line.cpp" />

@@ -3,23 +3,60 @@
 #include "Window.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-//#include "Graphics.h"
+#include "Graphics.h"
+
+#include "Line.h"
+#include "HoldableItem.h"
+#include "MoveableCircuitItem.h"
+#include "HoldableAND.h"
+#include "HoldableOR.h"
+#include "HoldableInput.h"
+#include "SignalInput.h"
+#include "SignalOutput.h"
+#include "HPTimer.h"
 
 class App
 {
 private:
+	Window window{ &keyboard, &mouse };
+	Mouse mouse{ &window };
 	Keyboard keyboard{};
-	Mouse mouse{};
-	Window window{&keyboard, &mouse};
+	Graphics graphics;
+	std::vector<LayoutItem*> layoutVector{};
+	std::vector<CircuitItem*> circuitVector{};
+	std::vector<CircuitItem*> signalLinesVector{};
+
+	HoldableItem* pHoldingItem{};
+	MoveableCircuitItem* pHoldingCircuitItem{};
+
+	SignalOutput* pSelectedSignalOutput{};
+	SignalInput* pSelectedSignalInput{};
+
+	HPTimer hpTimer{};
 
 public:
 	App() = default;
 	App(const App&) = delete;
 	App operator=(const App&) = delete;
-	
+	~App();
+
 	int Run();
 
-	void Update();
-	//void Render();
+private:
+	inline void Update();
+	inline void Render();
+	inline void DrawFrameRate();
+
+	inline void CreateLayout();
+
+	inline void OnLMBClicked();
+	inline void OnLMBReleased();
+	inline void OnRMBClicked();
+	inline void OnRMBReleased();
+
+	inline void OnLMBDown();
+	inline void OnRMBDown();
+
+	double frameRate{};
 };
 

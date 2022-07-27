@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+class Window;
+
 class Mouse
 {
 public:
@@ -19,15 +21,10 @@ private:
 	int x{};
 	int y{};
 
-	void OnLeftDown();
-	void OnLeftUp();
-	void OnRightDown();
-	void OnRightUp();
-
-	void OnMove(int x, int y);
+	const Window* window;
 
 public:
-	Mouse();
+	Mouse(const Window* window);
 	Mouse(const Mouse&) = delete;
 	Mouse operator=(const Mouse&) = delete;
 
@@ -37,6 +34,17 @@ public:
 	int GetX() const { return x; }
 	int GetY() const { return y; }
 
+	MouseStatus GetLMBStatus() const { return leftButtonStatus; }
+	MouseStatus GetRMBStatus() const { return rightButtonStatus; }
+
 	friend class Window;
+
+private:
+	void OnLeftDown();
+	void OnLeftUp();
+	void OnRightDown();
+	void OnRightUp();
+
+	void OnMove(int x, int y);
 };
 

@@ -1,5 +1,3 @@
-#include "Window.h"
-#include "Graphics.h"
 #include <Windows.h>
 #include "App.h"
 

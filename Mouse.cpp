@@ -1,6 +1,8 @@
 #include "Mouse.h"
+#include "Window.h"
 
-Mouse::Mouse()
+Mouse::Mouse(const Window* window) :
+	window{ window }
 {
 	POINT pt{};
 	GetCursorPos(&pt);

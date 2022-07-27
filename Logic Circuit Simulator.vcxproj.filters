@@ -80,9 +80,6 @@
     <ClCompile Include="ANDGate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CircuitItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

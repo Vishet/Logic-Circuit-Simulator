@@ -90,9 +90,10 @@ void Graphics::BeginDraw(const D2D1::ColorF& clearColor, const std::vector<Layou
 	this->DrawLayout(layoutItems);
 }
 
-void Graphics::BeginDraw(const D2D1::ColorF& clearColor, const std::vector<LayoutItem*>& layoutItems, const std::vector<CircuitItem*>& circuitItems) const
+void Graphics::BeginDraw(const D2D1::ColorF& clearColor, const std::vector<LayoutItem*>& layoutItems, const std::vector<CircuitItem*>& circuitItems, const std::vector<LayoutItem*>& signalLines) const
 {
 	this->BeginDraw(clearColor);
+	this->DrawSignalLines(signalLines);
 	this->DrawCircuit(circuitItems);
 	this->DrawLayout(layoutItems);
 }
@@ -159,4 +160,11 @@ void Graphics::DrawCircuit(const std::vector<CircuitItem*>& circuitItems) const
 	for (const auto& item : circuitItems)
 		if (item)
 			item->Draw();
+}
+
+void Graphics::DrawSignalLines(const std::vector<LayoutItem*>& signalLines) const
+{
+	for (const auto& signalLine : signalLines)
+		if (signalLine)
+			signalLine->Draw();
 }

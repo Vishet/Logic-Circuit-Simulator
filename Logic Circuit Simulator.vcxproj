@@ -128,7 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ANDGate.cpp" />
-    <ClCompile Include="CircuitItem.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="HoldableAND.cpp" />
     <ClCompile Include="HoldableGate.cpp" />

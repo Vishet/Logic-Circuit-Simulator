@@ -13,16 +13,17 @@ private:
 public:
 	SignalOutput(
 		const Graphics* pGraphics,
-		const D2D1_POINT_2F& offsetPosition,
+		const D2D1_POINT_2F& position,
 		const float radius,
-		const D2D1_COLOR_F& bgColor,
-		const D2D1_POINT_2F& position
+		const D2D1_COLOR_F& bgColor
 	);
 
 	void LinkInput(SignalInput* pInput);
 	void SetStatus(bool status) override;
 	void UpdateLine(const D2D1_POINT_2F& newPoint);
 	void UpdateLine();
-	void Draw(const D2D1_RECT_F& parentRect) const override;
+	void Draw() const override;
+	void Move(const D2D1_POINT_2F& ptMoveTo) override;
+	Line* GetLinePtr() { return &signalLine; }
 };
 

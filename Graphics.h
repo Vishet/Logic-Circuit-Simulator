@@ -43,7 +43,8 @@ public:
 	void BeginDraw(
 		const D2D1::ColorF& clearColor, 
 		const std::vector<LayoutItem*>& layoutItems, 
-		const std::vector<CircuitItem*>& circuitItems
+		const std::vector<CircuitItem*>& circuitItems,
+		const std::vector<LayoutItem*>& signalLines
 	) const;
 	bool EndDraw() const;
 
@@ -56,5 +57,6 @@ public:
 	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;
 
 	void DrawCircuit(const std::vector<CircuitItem*>& circuitItems) const;
+	void DrawSignalLines(const std::vector<LayoutItem*>& signalLines) const;
 };
 

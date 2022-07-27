@@ -2,21 +2,29 @@
 
 SignalOutput::SignalOutput(
 	const Graphics* pGraphics,
-	const D2D1_POINT_2F& offsetPosition,
+	const D2D1_POINT_2F& position,
 	const float radius,
-	const D2D1_COLOR_F& bgColor,
-	const D2D1_POINT_2F& position
+	const D2D1_COLOR_F& bgColor
 ) :
-	SignalIO(pGraphics, offsetPosition, radius, bgColor),
+	SignalIO(pGraphics, position, radius, bgColor),
 	signalLine(pGraphics, position, position, D2D1::ColorF(D2D1::ColorF::LightGray), 2.0f)
 {
 }
 
 void SignalOutput::LinkInput(SignalInput* pInput)
 {
-	pLinkedInput = pInput;
-	pLinkedInput->SetStatus(this->status);
-	signalLine.ChangePointB(pInput->GetPosition());
+	if (pInput)
+	{
+		pLinkedInput = pInput;
+		pLinkedInput->SetStatus(this->status);
+		signalLine.ChangePointB(pInput->GetPosition());
+	}
+	else if(pLinkedInput)
+	{
+		pLinkedInput->LinkLine(nullptr);
+		pLinkedInput = nullptr;
+		signalLine.ChangePointB(signalLine.GetPointA());
+	}
 }
 
 void SignalOutput::SetStatus(bool status)
@@ -35,13 +43,15 @@ void SignalOutput::UpdateLine()
 	signalLine.ChangePointB(signalLine.GetPointA());
 }
 
-void SignalOutput::Draw(const D2D1_RECT_F& parentRect) const
+void SignalOutput::Draw() const
 {
-	pGraphics->FillCircle(
-		D2D1::Point2F(parentRect.left + offsetPosition.x, parentRect.top + offsetPosition.y),
-		radius,
-		bgColor
-	);
-	signalLine.Draw();
+	SignalIO::Draw();
 }
 
+void SignalOutput::Move(const D2D1_POINT_2F& ptMoveTo)
+{
+	SignalIO::Move(ptMoveTo);
+	signalLine.ChangePointA(position);
+	if (!pLinkedInput)
+		signalLine.ChangePointB(position);
+}

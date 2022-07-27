@@ -7,25 +7,21 @@ Input::Input(
 	const D2D1_COLOR_F& bgColor,
 	const D2D1_COLOR_F& activeColor
 ) :
-	MoveableCircuitItem(pGraphics, D2D1::RectF(), bgColor, L"", D2D1::ColorF(D2D1::ColorF::Black)),
+	MoveableCircuitItem(pGraphics, bgColor),
 	centerPoint{ centerPoint },
 	radius{ radius },
 	activeColor{ activeColor },
-	signalOutput{ pGraphics, D2D1::Point2F(0.0f, 0.0f), 0.0f, D2D1::ColorF(D2D1::ColorF::Gray), centerPoint }
+	signalOutput{ pGraphics, centerPoint, 0.0f, D2D1::ColorF(D2D1::ColorF::Gray) }
 {
 }
 
 void Input::Draw() const
 {
+	signalOutput.Draw();
 	if(actived)
 		pGraphics->FillCircle(centerPoint, radius, activeColor);
 	else
 		pGraphics->FillCircle(centerPoint, radius, bgColor);
-
-	signalOutput.Draw(D2D1::RectF(
-		centerPoint.x, centerPoint.y,
-		centerPoint.x, centerPoint.y
-	));
 }
 
 MoveableCircuitItem* Input::OnClick(const D2D1_POINT_2F& mousePoint)
@@ -54,6 +50,7 @@ SignalOutput* Input::OnRightClick(const D2D1_POINT_2F& mousePoint)
 	if (DistanceOfTwoPoint(mousePoint, centerPoint) <= radius)
 	{
 		signalOutput.UpdateLine(mousePoint);
+		signalOutput.LinkInput(nullptr);
 		return &signalOutput;
 	}
 	return nullptr;
@@ -63,4 +60,5 @@ void Input::Move(const D2D1_POINT_2F& mousePoint)
 {
 	centerPoint.x = mousePoint.x - mouseOffset.x;
 	centerPoint.y = mousePoint.y - mouseOffset.y;
+	signalOutput.Move(centerPoint);
 }

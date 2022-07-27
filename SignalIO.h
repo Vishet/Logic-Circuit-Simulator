@@ -9,7 +9,7 @@ class SignalIO
 {
 protected:
 	const Graphics* pGraphics;
-	D2D1_POINT_2F offsetPosition;
+	D2D1_POINT_2F position;
 	const float radius;
 	const D2D1_COLOR_F bgColor;
 	bool status{ false };
@@ -17,13 +17,14 @@ protected:
 public:
 	SignalIO(
 		const Graphics* pGraphics,
-		const D2D1_POINT_2F& offsetPosition,
+		const D2D1_POINT_2F& position,
 		const float radius,
 		const D2D1_COLOR_F& bgColor
 	);
 
-	virtual void Draw(const D2D1_RECT_F& parentRect) const;
+	virtual void Draw() const;
 	virtual void SetStatus(bool status);
-	D2D1_POINT_2F GetPosition() const { return offsetPosition; }
+	virtual void Move(const D2D1_POINT_2F& ptMoveTo) { position = ptMoveTo; }
+	D2D1_POINT_2F GetPosition() const { return position; }
 };
 

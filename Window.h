@@ -26,6 +26,7 @@ private:
 	Graphics* pGraphics{ new Graphics() };
 	std::vector<LayoutItem*> layoutVector{};
 	std::vector<CircuitItem*> circuitVector{};
+	std::vector<LayoutItem*> signalLinesVector{};
 	float nWidth{};
 	float nHeight{};
 	bool lmbPrevious{ false };

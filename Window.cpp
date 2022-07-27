@@ -9,12 +9,15 @@ Window::~Window()
 	for (auto& layoutItem : layoutVector)
 		delete layoutItem;
 
+	for (auto& circuitItem : circuitVector)
+		delete circuitItem;
+
 	pGraphics->Unitialize();
 }
 
 bool Window::Update() const
 {
-	pGraphics->BeginDraw(D2D1::ColorF::Black, layoutVector, circuitVector);
+	pGraphics->BeginDraw(D2D1::ColorF::Black, layoutVector, circuitVector, signalLinesVector);
 	return pGraphics->EndDraw();
 }
 
@@ -215,11 +218,21 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			for (auto& item : circuitVector)
 			{
-				pSelectedSignalOutput = dynamic_cast<SignalOutput*>(item->OnRightClick(D2D1::Point2F(
+				pSelectedSignalOutput = item->OnRightClick(D2D1::Point2F(
 					static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))
-				)));
+				));
+
 				if (pSelectedSignalOutput)
 				{
+					bool findedLine{ false };
+					for (size_t index{ 0 }; index < signalLinesVector.size(); index++)
+						if (signalLinesVector.at(index) == pSelectedSignalOutput->GetLinePtr())
+						{
+							findedLine = true;
+							break;
+						}
+					if(!findedLine)
+						signalLinesVector.push_back(pSelectedSignalOutput->GetLinePtr());
 					if (!this->Update())
 						MessageBox(hWindow, L"this->Update() failed!", L"ERROR", MB_ICONERROR | MB_OK);
 					break;
@@ -243,6 +256,7 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (pSelectedSignalInput)
 				{
 					pSelectedSignalOutput->LinkInput(pSelectedSignalInput);
+					pSelectedSignalInput->LinkLine(pSelectedSignalOutput->GetLinePtr());
 					pSelectedSignalOutput->UpdateLine(pSelectedSignalInput->GetPosition());
 					if (!this->Update())
 						MessageBox(hWindow, L"this->Update() failed!", L"ERROR", MB_ICONERROR | MB_OK);
@@ -253,7 +267,15 @@ LRESULT Window::WndProc(HWND hWindow, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 			if (!pSelectedSignalInput)
 			{
-				pSelectedSignalOutput->UpdateLine();
+				Line* resetedLine{ pSelectedSignalOutput->GetLinePtr() };
+
+				for (size_t index{ 0 }; index < signalLinesVector.size(); index++)
+					if (signalLinesVector.at(index) == resetedLine)
+					{
+						signalLinesVector.erase(signalLinesVector.begin() + index);
+						break;
+					}
+
 				if (!this->Update())
 					MessageBox(hWindow, L"this->Update() failed!", L"ERROR", MB_ICONERROR | MB_OK);				
 			}

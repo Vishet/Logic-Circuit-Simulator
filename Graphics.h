@@ -54,6 +54,7 @@ public:
 	void DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, float strokeWidth) const;
 	void FillRectangle(const D2D1_RECT_F& rect, const D2D1_COLOR_F& color) const;
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const;
+	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, int x, int y);
 	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;
 
 	void DrawCircuit(const std::vector<CircuitItem*>& circuitItems, const std::vector<CircuitItem*>& signalLines) const;

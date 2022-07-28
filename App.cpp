@@ -31,10 +31,6 @@ int App::Run()
 
 		Update();
 		Render();
-
-		frameRate = hpTimer.GetTickRate();
-		DrawFrameRate();
-		hpTimer.Set();
 	}
 
 	return *exitCode;
@@ -62,23 +58,31 @@ void App::Update()
 
 	mouse.Update();
 	keyboard.Update();
+
+	if (fpsDelayTimer.GetElapsedSeconds() > 1)
+	{
+		frameRate = fpsTimer.GetTickRate();
+		fpsDelayTimer.Set();
+	}
+	fpsTimer.Set();
 }
 
 void App::Render()
 {
 	graphics.BeginDraw(D2D1::ColorF::Black, layoutVector, circuitVector, signalLinesVector);
+	
+	DrawFrameRate();
+
 	graphics.EndDraw();
 }
 
 inline void App::DrawFrameRate()
 {
-	graphics.BeginDraw();
 	graphics.DrawWString(
 		std::to_wstring(frameRate),
 		D2D1::ColorF(D2D1::ColorF::White),
-		D2D1::RectF(2.0f, 2.0f, 300.0f, 300.0f)
+		0, 0
 	);
-	graphics.EndDraw();
 }
 
 void App::CreateLayout()
@@ -129,7 +133,7 @@ void App::OnLMBClicked()
 	OutputDebugString(L"Clickou\n");
 	for (auto& item : layoutVector)
 	{
-		if (item && item->itemType == LayoutItem::ItemType::Holdable)
+		if (item->itemType == LayoutItem::ItemType::Holdable)
 		{
 			pHoldingItem = dynamic_cast<HoldableItem*>(item)->OnClick(D2D1::Point2F(
 				static_cast<float>(mouse.GetX()),
@@ -144,7 +148,7 @@ void App::OnLMBClicked()
 	}
 	for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
 	{
-		if (*item)
+		if (true)
 		{
 			pHoldingCircuitItem = dynamic_cast<MoveableCircuitItem*>(*item)->OnClick(D2D1::Point2F(
 				static_cast<float>(mouse.GetX()),

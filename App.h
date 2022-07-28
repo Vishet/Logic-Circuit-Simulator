@@ -15,6 +15,9 @@
 #include "SignalOutput.h"
 #include "HPTimer.h"
 
+#include <thread>
+#include <chrono>
+
 class App
 {
 private:
@@ -32,7 +35,10 @@ private:
 	SignalOutput* pSelectedSignalOutput{};
 	SignalInput* pSelectedSignalInput{};
 
-	HPTimer hpTimer{};
+	HPTimer fpsTimer{};
+	int frameRate{};
+
+	HPTimer fpsDelayTimer{ 1.0 };
 
 public:
 	App() = default;
@@ -56,7 +62,5 @@ private:
 
 	inline void OnLMBDown();
 	inline void OnRMBDown();
-
-	double frameRate{};
 };
 

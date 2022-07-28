@@ -2,7 +2,15 @@
 
 HPTimer::HPTimer()
 {
-	auto teste = QueryPerformanceFrequency(&CpuFrequency);
+	QueryPerformanceFrequency(&CpuFrequency);
+	QueryPerformanceCounter(&lastCount);
+}
+
+HPTimer::HPTimer(double startSeconds)
+{
+	QueryPerformanceFrequency(&CpuFrequency);
+	QueryPerformanceCounter(&lastCount);
+	lastCount.QuadPart -= CpuFrequency.QuadPart;
 }
 
 void HPTimer::Set()
@@ -10,7 +18,7 @@ void HPTimer::Set()
 	QueryPerformanceCounter(&lastCount);
 }
 
-double HPTimer::GetElapsedTime()
+double HPTimer::GetElapsedSeconds()
 {
 	LARGE_INTEGER currentCount{};
 	QueryPerformanceCounter(&currentCount);
@@ -18,11 +26,9 @@ double HPTimer::GetElapsedTime()
 	return static_cast<double>(currentCount.QuadPart - lastCount.QuadPart) / CpuFrequency.QuadPart;
 }
 
-double HPTimer::GetTickRate()
+int HPTimer::GetTickRate()
 {
-	LARGE_INTEGER currentCount{};
-	QueryPerformanceCounter(&currentCount);
-
-	return static_cast<double>(currentCount.QuadPart - lastCount.QuadPart) * 1000000 / CpuFrequency.QuadPart;
+	return 1.0 / GetElapsedSeconds();
 }
+
 

@@ -10,11 +10,12 @@ private:
 
 public:
 	HPTimer();
+	HPTimer(double startSeconds);
 	HPTimer(const HPTimer&) = delete;
 	HPTimer operator=(const HPTimer&) = delete;
 
 	void Set();
-	double GetElapsedTime();
-	double GetTickRate();
+	double GetElapsedSeconds();
+	int GetTickRate();
 };
 

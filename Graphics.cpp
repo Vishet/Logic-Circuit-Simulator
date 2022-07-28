@@ -60,8 +60,6 @@ bool Graphics::Initialize(HWND hWindow)
 	);
 	if (FAILED(hr)) return false;
 
-	pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-
 	return true;
 }
 
@@ -132,6 +130,7 @@ void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textCol
 {
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 	pRenderTarget->CreateSolidColorBrush(textColor, &pBrush);
+	pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 
 	pRenderTarget->DrawTextW(
 		text.c_str(),
@@ -144,6 +143,26 @@ void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textCol
 		),
 		pBrush,
 		D2D1_DRAW_TEXT_OPTIONS_CLIP
+	);
+	pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+}
+
+void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, int x, int y)
+{
+	CComPtr<ID2D1SolidColorBrush> pBrush{};
+	pRenderTarget->CreateSolidColorBrush(textColor, &pBrush);
+
+	pRenderTarget->DrawTextW(
+		text.c_str(),
+		static_cast<UINT32>(text.size()),
+		pTextFormat,
+		D2D1::RectF(
+			x,
+			y,
+			GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)
+		),
+		pBrush,
+		D2D1_DRAW_TEXT_OPTIONS_NONE
 	);
 }
 

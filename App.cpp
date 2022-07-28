@@ -142,11 +142,11 @@ void App::OnLMBClicked()
 			}
 		}
 	}
-	for (auto& item : circuitVector)
+	for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
 	{
-		if (item)
+		if (*item)
 		{
-			pHoldingCircuitItem = dynamic_cast<MoveableCircuitItem*>(item)->OnClick(D2D1::Point2F(
+			pHoldingCircuitItem = dynamic_cast<MoveableCircuitItem*>(*item)->OnClick(D2D1::Point2F(
 				static_cast<float>(mouse.GetX()),
 				static_cast<float>(mouse.GetY())
 			));
@@ -158,12 +158,11 @@ void App::OnLMBClicked()
 
 void App::OnLMBReleased()
 {
-	OutputDebugString(L"Soltou\n");
-	for (size_t i{ 0 }; i < layoutVector.size(); i++)
+	for(auto item{ layoutVector.begin() }; item != layoutVector.end(); ++item)
 	{
-		if (layoutVector.at(i) == pHoldingItem)
+		if (*item == pHoldingItem)
 		{
-			layoutVector.erase(layoutVector.begin() + i);
+			layoutVector.erase(item);
 			circuitVector.push_back(pHoldingItem->Drop());
 			break;
 		}
@@ -177,9 +176,9 @@ void App::OnLMBReleased()
 
 void App::OnRMBClicked()
 {
-	for (auto& item : circuitVector)
+	for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
 	{
-		pSelectedSignalOutput = item->OnRightClick(D2D1::Point2F(
+		pSelectedSignalOutput = (*item)->OnRightClick(D2D1::Point2F(
 			static_cast<float>(mouse.GetX()), static_cast<float>(mouse.GetY())
 		));
 
@@ -205,9 +204,9 @@ void App::OnRMBReleased()
 {
 	if (pSelectedSignalOutput)
 	{
-		for (auto& item : circuitVector)
+		for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
 		{
-			pSelectedSignalInput = item->OnRightUp(D2D1::Point2F(
+			pSelectedSignalInput = (*item)->OnRightUp(D2D1::Point2F(
 				static_cast<float>(mouse.GetX()),
 				static_cast<float>(mouse.GetY())
 			));
@@ -240,7 +239,6 @@ void App::OnRMBReleased()
 
 void App::OnLMBDown()
 {
-	OutputDebugString(L"Segurou\n");
 	if (pHoldingItem)
 		pHoldingItem->Move(D2D1::Point2F(
 			static_cast<float>(mouse.GetX()),

@@ -14,6 +14,7 @@
 #include "SignalInput.h"
 #include "SignalOutput.h"
 #include "HPTimer.h"
+#include "VRectangle.h"
 
 #include <thread>
 #include <chrono>

@@ -6,10 +6,14 @@ public:
 	enum class ItemType
 	{
 		None,
+		Holdable,
 		Line,
-		Holdable
+		Rectangle
 	};
-	ItemType itemType{ ItemType::None };
 	virtual void Draw() const = 0;
+	ItemType GetItemType() const { return itemType; }
+
+protected:
+	ItemType itemType{ ItemType::None };
 };
 

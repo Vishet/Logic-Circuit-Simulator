@@ -104,6 +104,12 @@ void App::CreateLayout()
 
 	float lineY{ 510.0f };
 
+	layoutVector.push_back(new VRectangle(
+		&graphics,
+		D2D1::RectF(0, lineY, maxY, maxX),
+		D2D1::ColorF(D2D1::ColorF::Black)
+	));
+
 	layoutVector.push_back(new Line(
 		&graphics,
 		D2D1::Point2F(0, lineY),
@@ -145,7 +151,7 @@ void App::OnLMBClicked()
 	OutputDebugString(L"Clickou\n");
 	for (auto& item : layoutVector)
 	{
-		if (item->itemType == LayoutItem::ItemType::Holdable)
+		if (item->GetItemType() == LayoutItem::ItemType::Holdable)
 		{
 			pHoldingItem = dynamic_cast<HoldableItem*>(item)->OnClick(D2D1::Point2F(
 				static_cast<float>(mouse.GetX()),

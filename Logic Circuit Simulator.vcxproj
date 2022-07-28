@@ -124,6 +124,7 @@
     <ClInclude Include="MoveableCircuitItem.h" />
     <ClInclude Include="NormalGate.h" />
     <ClInclude Include="ORGate.h" />
+    <ClInclude Include="VRectangle.h" />
     <ClInclude Include="SignalInput.h" />
     <ClInclude Include="SignalIO.h" />
     <ClInclude Include="SignalLine.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="MoveableCircuitItem.cpp" />
     <ClCompile Include="NormalGate.cpp" />
     <ClCompile Include="ORGate.cpp" />
+    <ClCompile Include="VRectangle.cpp" />
     <ClCompile Include="SignalInput.cpp" />
     <ClCompile Include="SignalIO.cpp" />
     <ClCompile Include="SignalLine.cpp" />

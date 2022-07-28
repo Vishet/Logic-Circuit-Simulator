@@ -3,8 +3,6 @@
 #include "LayoutItem.h"
 #include "Graphics.h"
 
-#include <Windows.h>
-
 class Line : public LayoutItem
 {
 private:

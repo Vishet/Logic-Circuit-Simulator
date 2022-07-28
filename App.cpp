@@ -69,8 +69,20 @@ void App::Update()
 
 void App::Render()
 {
-	graphics.BeginDraw(D2D1::ColorF::Black, layoutVector, circuitVector, signalLinesVector);
+	graphics.BeginDraw(D2D1::ColorF::Black);
 	
+	for (const auto& line : signalLinesVector)
+		if (line)
+			line->Draw();
+
+	for (const auto& item : circuitVector)
+		if (item)
+			item->Draw();
+
+	for (const auto& item : layoutVector)
+		if (item)
+			item->Draw();
+
 	DrawFrameRate();
 
 	graphics.EndDraw();

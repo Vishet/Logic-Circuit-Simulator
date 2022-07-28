@@ -82,19 +82,6 @@ void Graphics::BeginDraw(const D2D1::ColorF& clearColor) const
 	this->Fill(clearColor);
 }
 
-void Graphics::BeginDraw(const D2D1::ColorF& clearColor, const std::vector<LayoutItem*>& layoutItems) const
-{
-	this->BeginDraw(clearColor);
-	this->DrawLayout(layoutItems);
-}
-
-void Graphics::BeginDraw(const D2D1::ColorF& clearColor, const std::vector<LayoutItem*>& layoutItems, const std::vector<CircuitItem*>& circuitItems, const std::vector<CircuitItem*>& signalLines) const
-{
-	this->BeginDraw(clearColor);
-	this->DrawCircuit(circuitItems, signalLines);
-	this->DrawLayout(layoutItems);
-}
-
 void Graphics::Fill(const D2D1::ColorF& clearColor) const
 {
 	pRenderTarget->Clear(clearColor);
@@ -103,13 +90,6 @@ void Graphics::Fill(const D2D1::ColorF& clearColor) const
 bool Graphics::EndDraw() const
 {
 	return SUCCEEDED(pRenderTarget->EndDraw());
-}
-
-void Graphics::DrawLayout(const std::vector<LayoutItem*>& layoutItems) const
-{
-	for (const auto& item : layoutItems)
-		if(item)
-			item->Draw();
 }
 
 void Graphics::DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, float strokeWidth) const
@@ -171,15 +151,4 @@ void Graphics::FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, 
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 	pRenderTarget->CreateSolidColorBrush(bgColor, &pBrush);
 	pRenderTarget->FillEllipse(D2D1::Ellipse(centerPoint, radius, radius), pBrush);
-}
-
-void Graphics::DrawCircuit(const std::vector<CircuitItem*>& circuitItems, const std::vector<CircuitItem*>& signalLines) const
-{
-	for (const auto& line : signalLines)
-		if (line)
-			line->Draw();
-
-	for (const auto& item : circuitItems)
-		if (item)
-			item->Draw();
 }

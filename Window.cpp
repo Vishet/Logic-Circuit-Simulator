@@ -32,7 +32,7 @@ bool Window::Create(const wchar_t* szWindowName, WindowClass::ClassName classNam
 	hWindow = CreateWindowExW(
 		NULL,
 		szClassName, szWindowName,
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,
 		x, y, ncWidth, ncHeight,
 		NULL, NULL, GetModuleHandle(0), this 
 	);

@@ -277,6 +277,29 @@ void App::OnRMBDown()
 {
 	if (pSelectedSignalOutput)
 	{
+		for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
+		{
+			D2D1_POINT_2F inputPoint{};
+			if((*item)->isMouseOverInput(D2D1::Point2F(
+				static_cast<float>(mouse.GetX()),
+				static_cast<float>(mouse.GetY())
+				), 
+				inputPoint
+			))
+			{
+				pSelectedSignalOutput->SetLockLine(false);
+				pSelectedSignalOutput->UpdateLine(D2D1::Point2F(
+					static_cast<float>(inputPoint.x),
+					static_cast<float>(inputPoint.y)
+				));
+				return;
+			}
+
+		}
+
+		if(keyboard.GetKeyStatus(VK_SHIFT) ==  Keyboard::KeyStatus::DOWN)
+			pSelectedSignalOutput->SetLockLine(true);
+
 		pSelectedSignalOutput->UpdateLine(D2D1::Point2F(
 			static_cast<float>(mouse.GetX()),
 			static_cast<float>(mouse.GetY())

@@ -10,6 +10,27 @@ SignalLine::SignalLine(const Graphics* pGraphics, const D2D1_POINT_2F& pointA, c
 {
 }
 
+void SignalLine::ChangePointB(const D2D1_POINT_2F& point)
+{
+	if (!directionLocked)
+	{
+		pointB.x = point.x;
+		pointB.y = point.y;
+		return;
+	}
+
+	if (abs(point.x - pointA.x) >= abs(point.y - pointA.y))
+	{
+		pointB.x = point.x;
+		pointB.y = pointA.y;
+	}
+	else
+	{
+		pointB.y = point.y;
+		pointB.x = pointA.x;
+	}		
+}
+
 void SignalLine::Draw() const
 {
 	if(status)

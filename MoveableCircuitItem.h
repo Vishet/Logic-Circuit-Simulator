@@ -21,5 +21,7 @@ public:
 	virtual void Move(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual SignalOutput* OnRightClick(const D2D1_POINT_2F& mousePoint) override;
 	virtual SignalInput* OnRightUp(const D2D1_POINT_2F& mousePoint) override;
+
+	virtual bool isMouseOverInput(const D2D1_POINT_2F& mousePoint, D2D1_POINT_2F& inputPoint) const override { return false; }
 };
 

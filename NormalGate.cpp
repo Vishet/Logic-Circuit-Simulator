@@ -73,3 +73,15 @@ void NormalGate::Move(const D2D1_POINT_2F& mousePoint)
 		(rcItem.bottom - rcItem.top) * 7 / 8 + rcItem.top
 	));
 }
+
+bool NormalGate::isMouseOverInput(const D2D1_POINT_2F& mousePoint, D2D1_POINT_2F& inputPoint) const
+{
+	if (DistanceOfTwoPoint(mousePoint, inputA.GetPosition()) <= ioRadius && !inputA.isLinked())
+		inputPoint = inputA.GetPosition();
+	else if (DistanceOfTwoPoint(mousePoint, inputB.GetPosition()) <= ioRadius && !inputB.isLinked())
+		inputPoint = inputB.GetPosition();
+	else
+		return false;
+
+	return true;
+}

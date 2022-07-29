@@ -30,5 +30,7 @@ public:
 	SignalInput* OnRightUp(const D2D1_POINT_2F& mousePoint) override;
 	MoveableCircuitItem* OnClick(const D2D1_POINT_2F& mousePoint) override;
 	void Move(const D2D1_POINT_2F& mousePoint);
+
+	bool isMouseOverInput(const D2D1_POINT_2F& mousePoint, D2D1_POINT_2F& inputPoint) const override;
 };
 

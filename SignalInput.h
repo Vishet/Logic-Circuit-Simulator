@@ -18,8 +18,7 @@ public:
 	);
 
 	void Move(const D2D1_POINT_2F& ptMoveTo) override;
-	void Draw() const override;
 	void LinkLine(SignalLine* signalLine) { this->signalLine = signalLine; }
-	bool isLinked() { return signalLine; }
+	bool isLinked() const { return signalLine; }
 };
 

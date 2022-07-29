@@ -21,5 +21,7 @@ public:
 	virtual SignalOutput* OnRightClick(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual SignalInput* OnRightUp(const D2D1_POINT_2F& mousePoint) = 0;
 	virtual void Draw() const = 0;
+
+	virtual bool isMouseOverInput(const D2D1_POINT_2F& mousePoint, D2D1_POINT_2F& inputPoint) const { return false; }
 };
 

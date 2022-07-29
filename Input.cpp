@@ -34,10 +34,6 @@ MoveableCircuitItem* Input::OnClick(const D2D1_POINT_2F& mousePoint)
 			mouseOffset.y = mousePoint.y - centerPoint.y;
 			return this;
 		}
-		else if (GetKeyState(VK_RBUTTON) & 0x8000)
-		{
-			
-		}
 		else if (GetKeyState(VK_LBUTTON) & 0x8000)
 		{
 			actived = !actived;

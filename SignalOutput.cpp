@@ -52,11 +52,6 @@ void SignalOutput::UpdateLine()
 	signalLine.ChangePointB(signalLine.GetPointA());
 }
 
-void SignalOutput::Draw() const
-{
-	SignalIO::Draw();
-}
-
 void SignalOutput::Move(const D2D1_POINT_2F& ptMoveTo)
 {
 	SignalIO::Move(ptMoveTo);

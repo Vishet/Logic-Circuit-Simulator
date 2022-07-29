@@ -17,8 +17,3 @@ void SignalInput::Move(const D2D1_POINT_2F& ptMoveTo)
 	if (signalLine)
 		signalLine->ChangePointB(position);
 }
-
-void SignalInput::Draw() const
-{
-	SignalIO::Draw();
-}

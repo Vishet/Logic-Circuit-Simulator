@@ -13,6 +13,8 @@ private:
 	D2D1_COLOR_F activeColor;
 	float strokeWidth;
 	bool status{ false };
+	SignalLine* linkedSignalLine{ nullptr };
+	bool directionLocked{ false };
 
 public:
 	SignalLine(const Graphics* pGraphics, const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, const D2D1_COLOR_F& activeColor, float strokeWidth);
@@ -20,8 +22,10 @@ public:
 	SignalLine& operator=(const SignalLine&) = delete;
 
 	void ChangePointA(const D2D1_POINT_2F& point) { pointA = point; }
-	void ChangePointB(const D2D1_POINT_2F& point) { pointB = point; }
+	void ChangePointB(const D2D1_POINT_2F& point);
 	void SetStatus(bool status) { this->status = status; }
+
+	void SetLockDirection(bool lock) { directionLocked = lock; }
 
 	D2D1_POINT_2F GetPointA() { return pointA; }
 	D2D1_POINT_2F GetPointB() { return pointB; }

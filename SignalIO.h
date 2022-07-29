@@ -12,6 +12,7 @@ protected:
 	D2D1_POINT_2F position;
 	const float radius;
 	const D2D1_COLOR_F bgColor;
+	const D2D1_COLOR_F activeColor;
 	bool status{ false };
 
 public:
@@ -19,7 +20,8 @@ public:
 		const Graphics* pGraphics,
 		const D2D1_POINT_2F& position,
 		const float radius,
-		const D2D1_COLOR_F& bgColor
+		const D2D1_COLOR_F& bgColor,
+		const D2D1_COLOR_F& activeColor
 	);
 
 	virtual void Draw() const;

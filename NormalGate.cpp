@@ -14,12 +14,12 @@ NormalGate::NormalGate(
 	inputA{ SignalInput(
 		pGraphics,
 		D2D1::Point2F(rcItem.left, (rcItem.bottom - rcItem.top) / 8 + rcItem.top),
-		ioRadius, D2D1::ColorF(D2D1::ColorF::Gray)
+		ioRadius, D2D1::ColorF(D2D1::ColorF::Gray), D2D1::ColorF(D2D1::ColorF::DarkCyan)
 	) },
 	inputB{ SignalInput(
 		pGraphics,
 		D2D1::Point2F(rcItem.left, (rcItem.bottom - rcItem.top) * 7 / 8 + rcItem.top),
-		ioRadius, D2D1::ColorF(D2D1::ColorF::Gray)
+		ioRadius, D2D1::ColorF(D2D1::ColorF::Gray), D2D1::ColorF(D2D1::ColorF::DarkCyan)
 	) }
 {
 }

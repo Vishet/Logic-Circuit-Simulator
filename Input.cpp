@@ -11,7 +11,7 @@ Input::Input(
 	centerPoint{ centerPoint },
 	radius{ radius },
 	activeColor{ activeColor },
-	signalOutput{ pGraphics, centerPoint, 0.0f, D2D1::ColorF(D2D1::ColorF::Gray) }
+	signalOutput{ pGraphics, centerPoint, 0.0f, D2D1::ColorF(D2D1::ColorF::Gray), D2D1::ColorF(D2D1::ColorF::DarkCyan) }
 {
 }
 
@@ -38,8 +38,12 @@ MoveableCircuitItem* Input::OnClick(const D2D1_POINT_2F& mousePoint)
 		{
 			
 		}
-		else if(GetKeyState(VK_LBUTTON) & 0x8000)
+		else if (GetKeyState(VK_LBUTTON) & 0x8000)
+		{
 			actived = !actived;
+			signalOutput.SetStatus(actived);
+		}
+			
 	}
 
 	return nullptr;

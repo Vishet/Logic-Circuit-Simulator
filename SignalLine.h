@@ -29,9 +29,12 @@ public:
 	void CreateLinkLine();
 	void Reset();
 
-	D2D1_POINT_2F GetPointA() { return pointA; }
-	D2D1_POINT_2F GetPointB() { return pointB; }
-	bool isLineLinked() { return linkedSignalLine; }
+	D2D1_POINT_2F GetPointA() const { return pointA; }
+	D2D1_POINT_2F GetPointB() const { return pointB; }
+	bool IsHorizontalDirection() const;
+	bool IsDirectionLocked() const { return directionLocked; }
+	SignalLine* GetLinkedLine() const { return linkedSignalLine; }
+	SignalLine* GetLastLine();
 
 	void Draw() const override;
 

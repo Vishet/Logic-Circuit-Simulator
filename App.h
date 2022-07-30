@@ -22,6 +22,8 @@
 class App
 {
 private:
+	static constexpr int signalLineAlignmentLimit{ 15 };
+
 	Window window{ &keyboard, &mouse };
 	Mouse mouse{ &window };
 	Keyboard keyboard{};

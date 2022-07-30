@@ -76,6 +76,26 @@ void SignalLine::Reset()
 	linkedSignalLine = nullptr;
 }
 
+bool SignalLine::IsHorizontalDirection() const
+{
+	if (pointA.y == pointB.y && directionLocked)
+		return true;
+
+	return false;
+}
+
+SignalLine* SignalLine::GetLastLine()
+{
+	SignalLine* lastLine{};
+
+	if (linkedSignalLine)
+		lastLine = linkedSignalLine->GetLastLine();
+	else
+		return this;
+
+	return lastLine;
+}
+
 void SignalLine::Draw() const
 {
 	if (linkedSignalLine)

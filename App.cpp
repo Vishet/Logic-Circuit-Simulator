@@ -289,10 +289,64 @@ void App::OnRMBDown()
 		else
 			pSelectedSignalOutput->SetLockLine(false);
 
+		int changeX{mouse.GetX()};
+		int changeY{mouse.GetY()};
+
+		if (pSelectedSignalOutput->GetLinePtr()->GetLastLine()->IsDirectionLocked())
+		{
+			int alignedX{};
+			int alignedY{};
+
+			D2D1_POINT_2F selectedPoint{ pSelectedSignalOutput->GetLinePtr()->GetLastLine()->GetPointB() };
+
+			for (const auto leaderLine : signalLinesVector)
+			{
+				auto line{ dynamic_cast<SignalLine*>(leaderLine) };
+
+				while (line)
+				{
+					if (line != pSelectedSignalOutput->GetLinePtr()->GetLastLine())
+					{
+						D2D1_POINT_2F iteratingPoint{ dynamic_cast<SignalLine*>(line)->GetPointB() };
+
+						if (pSelectedSignalOutput->GetLinePtr()->GetLastLine()->IsHorizontalDirection())
+						{
+							if (abs(selectedPoint.x - iteratingPoint.x) < abs(alignedX - selectedPoint.x))
+							{
+								alignedX = iteratingPoint.x;
+							}
+						}
+						else
+						{
+							if (abs(selectedPoint.y - iteratingPoint.y) < abs(alignedY - selectedPoint.y))
+							{
+								alignedY = iteratingPoint.y;
+							}
+						}
+					}
+
+					line = line->GetLinkedLine();
+				}	
+			}
+
+			if (pSelectedSignalOutput->GetLinePtr()->GetLastLine()->IsHorizontalDirection())
+			{
+				if (abs(alignedX - changeX) <= signalLineAlignmentLimit)
+					changeX = alignedX;			
+			}
+			else if (abs(alignedY - changeY) <= signalLineAlignmentLimit)
+			{
+				changeY = alignedY;
+				OutputDebugString(L"ALINHOU");
+			}
+				
+				
+		}
+
 		pSelectedSignalOutput->GetLinePtr()->ChangePointB(
 			D2D1::Point2F(
-				static_cast<float>(mouse.GetX()),
-				static_cast<float>(mouse.GetY())
+				static_cast<float>(changeX),
+				static_cast<float>(changeY)
 			)
 		);
 

@@ -7,7 +7,7 @@ Input::Input(
 	const D2D1_COLOR_F& bgColor,
 	const D2D1_COLOR_F& activeColor
 ) :
-	MoveableCircuitItem(pGraphics, bgColor),
+	MoveableCircuitItem(pGraphics, bgColor, CircuitItem::ItemType::INPUT),
 	centerPoint{ centerPoint },
 	radius{ radius },
 	activeColor{ activeColor },
@@ -49,7 +49,8 @@ SignalOutput* Input::OnRightClick(const D2D1_POINT_2F& mousePoint)
 {
 	if (DistanceOfTwoPoint(mousePoint, centerPoint) <= radius)
 	{
-		signalOutput.UpdateLine(mousePoint);
+		signalOutput.GetLinePtr()->Reset();
+		signalOutput.GetLinePtr()->ChangePointB(mousePoint);
 		signalOutput.LinkInput(nullptr);
 		return &signalOutput;
 	}

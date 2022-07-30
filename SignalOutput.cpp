@@ -42,16 +42,6 @@ void SignalOutput::SetStatus(bool status)
 	signalLine.SetStatus(status);
 }
 
-void SignalOutput::UpdateLine(const D2D1_POINT_2F& newPoint)
-{
-	signalLine.ChangePointB(newPoint);
-}
-
-void SignalOutput::UpdateLine()
-{
-	signalLine.ChangePointB(signalLine.GetPointA());
-}
-
 void SignalOutput::Move(const D2D1_POINT_2F& ptMoveTo)
 {
 	SignalIO::Move(ptMoveTo);

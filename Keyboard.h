@@ -15,6 +15,11 @@ public:
 		RELEASED
 	};
 
+	enum Code
+	{
+		VK_D = 0x44
+	};
+
 private:
 	static constexpr size_t VKCodesNumber{ 256 };
 	std::array<KeyStatus, VKCodesNumber> keysStatus{};

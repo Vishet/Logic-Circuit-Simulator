@@ -2,9 +2,10 @@
 
 MoveableCircuitItem::MoveableCircuitItem(
 	const Graphics* pGraphics, 
-	const D2D1_COLOR_F bgColor
+	const D2D1_COLOR_F bgColor,
+	CircuitItem::ItemType itemType
 ) :
-	CircuitItem(bgColor),
+	CircuitItem(bgColor, itemType),
 	pGraphics{ pGraphics }
 {
 }

@@ -83,6 +83,9 @@ void App::Render()
 		if (item)
 			item->Draw();
 
+	if (pHoldingItem)
+		pHoldingItem->Draw();
+
 	DrawFrameRate();
 
 	graphics.EndDraw();
@@ -148,7 +151,6 @@ void App::CreateLayout()
 
 void App::OnLMBClicked()
 {
-	OutputDebugString(L"Clickou\n");
 	for (auto& item : layoutVector)
 	{
 		if (item->GetItemType() == LayoutItem::ItemType::Holdable)
@@ -158,10 +160,7 @@ void App::OnLMBClicked()
 				static_cast<float>(mouse.GetY())
 			));
 			if (pHoldingItem)
-			{
-				layoutVector.push_back(pHoldingItem);
 				break;
-			}
 		}
 	}
 	for (auto item{ circuitVector.rbegin() }; item != circuitVector.rend(); ++item)
@@ -180,14 +179,13 @@ void App::OnLMBClicked()
 
 void App::OnLMBReleased()
 {
-	for(auto item{ layoutVector.begin() }; item != layoutVector.end(); ++item)
+	if (pHoldingItem)
 	{
-		if (*item == pHoldingItem)
-		{
-			layoutVector.erase(item);
-			circuitVector.push_back(pHoldingItem->Drop());
-			break;
-		}
+		auto circuitItem{ pHoldingItem->Drop() };
+
+		circuitVector.push_back(circuitItem);
+		if (circuitItem->GetType() == CircuitItem::ItemType::INPUT)
+			signalLinesVector.push_back(dynamic_cast<Input*>(circuitItem)->GetSignalOutputPtr()->GetLinePtr());
 	}
 
 	delete pHoldingItem;
@@ -205,20 +203,7 @@ void App::OnRMBClicked()
 		));
 
 		if (pSelectedSignalOutput)
-		{
-			bool findedLine{ false };
-			for (size_t index{ 0 }; index < signalLinesVector.size(); index++)
-				if (signalLinesVector.at(index) == pSelectedSignalOutput->GetLinePtr())
-				{
-					findedLine = true;
-					break;
-				}
-			if (!findedLine)
-				signalLinesVector.push_back(pSelectedSignalOutput->GetLinePtr());
-
 			break;
-		}
-
 	}
 }
 
@@ -236,7 +221,7 @@ void App::OnRMBReleased()
 			{
 				pSelectedSignalOutput->LinkInput(pSelectedSignalInput);
 				pSelectedSignalInput->LinkLine(pSelectedSignalOutput->GetLinePtr());
-				pSelectedSignalOutput->UpdateLine(pSelectedSignalInput->GetPosition());
+				pSelectedSignalOutput->GetLinePtr()->ChangePointB(pSelectedSignalInput->GetPosition());
 
 				break;
 			}
@@ -249,7 +234,7 @@ void App::OnRMBReleased()
 			for (size_t index{ 0 }; index < signalLinesVector.size(); index++)
 				if (signalLinesVector.at(index) == resetedLine)
 				{
-					signalLinesVector.erase(signalLinesVector.begin() + index);
+					dynamic_cast<SignalLine*>(signalLinesVector.at(index))->Reset();
 					break;
 				}
 		}
@@ -288,21 +273,32 @@ void App::OnRMBDown()
 			))
 			{
 				pSelectedSignalOutput->SetLockLine(false);
-				pSelectedSignalOutput->UpdateLine(D2D1::Point2F(
-					static_cast<float>(inputPoint.x),
-					static_cast<float>(inputPoint.y)
-				));
+				pSelectedSignalOutput->GetLinePtr()->ChangePointB(
+					D2D1::Point2F(
+						static_cast<float>(inputPoint.x),
+						static_cast<float>(inputPoint.y)
+					)
+				);
 				return;
 			}
 
 		}
 
-		if(keyboard.GetKeyStatus(VK_SHIFT) ==  Keyboard::KeyStatus::DOWN)
+		if (keyboard.GetKeyStatus(VK_SHIFT) == Keyboard::KeyStatus::DOWN)
 			pSelectedSignalOutput->SetLockLine(true);
+		else
+			pSelectedSignalOutput->SetLockLine(false);
 
-		pSelectedSignalOutput->UpdateLine(D2D1::Point2F(
-			static_cast<float>(mouse.GetX()),
-			static_cast<float>(mouse.GetY())
-		));
+		pSelectedSignalOutput->GetLinePtr()->ChangePointB(
+			D2D1::Point2F(
+				static_cast<float>(mouse.GetX()),
+				static_cast<float>(mouse.GetY())
+			)
+		);
+
+		if (keyboard.GetKeyStatus(Keyboard::Code::VK_D) == Keyboard::KeyStatus::PRESSED)
+		{
+			pSelectedSignalOutput->GetLinePtr()->CreateLinkLine();
+		}
 	}
 }

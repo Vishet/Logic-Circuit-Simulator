@@ -6,12 +6,23 @@ SignalLine::SignalLine(const Graphics* pGraphics, const D2D1_POINT_2F& pointA, c
 	pointB{ pointB },
 	strokeWidth{ strokeWidth },
 	activeColor{ activeColor },
-	CircuitItem(color)
+	CircuitItem(color, CircuitItem::ItemType::SIGNAL_LINE)
 {
+}
+
+SignalLine::~SignalLine()
+{
+	if (linkedSignalLine)
+		delete linkedSignalLine;
 }
 
 void SignalLine::ChangePointB(const D2D1_POINT_2F& point)
 {
+	if (linkedSignalLine)
+	{
+		linkedSignalLine->ChangePointB(point);
+		return;
+	}
 	if (!directionLocked)
 	{
 		pointB.x = point.x;
@@ -31,8 +42,48 @@ void SignalLine::ChangePointB(const D2D1_POINT_2F& point)
 	}		
 }
 
+void SignalLine::SetStatus(bool status) 
+{ 
+	this->status = status;
+	if (linkedSignalLine)
+		linkedSignalLine->SetStatus(status);
+}
+
+void SignalLine::SetLockDirection(bool lock)
+{
+	if (linkedSignalLine)
+		linkedSignalLine->SetLockDirection(lock);
+	else
+		directionLocked = lock;
+}
+
+void SignalLine::CreateLinkLine()
+{
+	if (linkedSignalLine)
+	{
+		linkedSignalLine->CreateLinkLine();
+		return;
+	}
+
+	linkedSignalLine = new SignalLine(pGraphics, pointB, pointB, bgColor, activeColor, strokeWidth);
+	linkedSignalLine->SetStatus(status);
+}
+
+void SignalLine::Reset()
+{
+	pointB = pointA;
+	delete linkedSignalLine;
+	linkedSignalLine = nullptr;
+}
+
 void SignalLine::Draw() const
 {
+	if (linkedSignalLine)
+		linkedSignalLine->Draw();
+
+	if (pointA.x == pointB.x && pointA.y == pointB.y)
+		return;
+
 	if(status)
 		pGraphics->DrawLine(pointA, pointB, activeColor, strokeWidth);
 	else

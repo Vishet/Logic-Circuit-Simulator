@@ -7,7 +7,7 @@ NormalGate::NormalGate(
 	const D2D1_COLOR_F& textColor,
 	const std::wstring& itemText
 ) :
-	MoveableCircuitItem(pGraphics, bgColor),
+	MoveableCircuitItem(pGraphics, bgColor, CircuitItem::ItemType::NORMAL_GATE),
 	rcItem{ rcItem },
 	textColor{ textColor },
 	itemText{ itemText },

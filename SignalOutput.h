@@ -21,8 +21,6 @@ public:
 
 	void LinkInput(SignalInput* pInput);
 	void SetStatus(bool status) override;
-	void UpdateLine(const D2D1_POINT_2F& newPoint);
-	void UpdateLine();
 	void Move(const D2D1_POINT_2F& ptMoveTo) override;
 	SignalLine* GetLinePtr() { return &signalLine; }
 	void SetLockLine(bool lock) { signalLine.SetLockDirection(lock); }
